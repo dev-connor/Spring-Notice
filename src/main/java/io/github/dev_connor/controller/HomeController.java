@@ -1,4 +1,4 @@
-package io.github.dev_connor;
+package io.github.dev_connor.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
