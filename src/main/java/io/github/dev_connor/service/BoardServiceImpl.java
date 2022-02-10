@@ -16,18 +16,9 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class BoardServiceImpl implements BoardService {
-   
-   /*
-   @Autowired
-   private BoardMapper mapper;
-   */
-   
+	
    @Setter(onMethod_ = @Autowired )
    private BoardMapper mapper;
-   
-
-   // spring 4.3 이상에서 자동처리 p 200
-   //private BoardMapper mapper;
    
    @Override
    public void register(BoardVO board) { 
@@ -63,5 +54,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> getList(Criteria cri) {
 		log.info("get List with criteria: " + cri);
 		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		return mapper.getTotalCount(cri);
 	}
 }

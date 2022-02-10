@@ -15,5 +15,5 @@ public interface BoardMapper {
 	public int delete(Long bno);   // p 194
 	public int update(BoardVO board); // p 196
 	public List<BoardVO> getListWithPaging(Criteria cri); // p 294
-//	public int getTotalCount(Criteria cri); // p 322
+	public int getTotalCount(Criteria cri); // p 322
 }

@@ -21,7 +21,7 @@
 	   
 	<!-- 글 작성 -->
    <insert id="insertSelectKey">
-      <selectKey keyProperty="bno" order="BEFORE"   resultType="long">
+      <selectKey keyProperty="bno" order="BEFORE" resultType="long">
          select seq_board.nextval from dual
       </selectKey>
       insert into tbl_board (bno,title,content, writer)
@@ -47,4 +47,10 @@
       set title= #{title}, content=#{content}, writer=#{writer}, updateDate=sysdate
       where bno= #{bno}
    </update>   
+   
+	<!-- 글 갯수 확인 -->   
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) 
+		FROM tbl_board
+	</select>
 </mapper>
