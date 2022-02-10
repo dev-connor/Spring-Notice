@@ -26,30 +26,19 @@ public class BoardController {
    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
    private  BoardService service;
 
-   @GetMapping("/list")
-   public void list(Model model) {
-      log.info("list");
-      model.addAttribute("list", service.getList());
-   }
-   
-//	@GetMapping("/list")
-//	public void list(Criteria cri, Model model) {
-//
-//		log.info("list: " + cri);
-//		model.addAttribute("list", service.getList(cri));
-		
-		
-//		model.addAttribute("pageMaker", new PageDTO(cri, 123));
+	@GetMapping("/list")
+	public void list(Criteria cri, Model model) {
+		log.info("list: " + cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, 123));
 
 //		int total = service.getTotal(cri);
 //		log.info("total: " + total);
 //		model.addAttribute("pageMaker", new PageDTO(cri, total));
-//	}
+	}
 
-
-   
    @GetMapping("/register")
-   public void register() {   }
+   public void register() {}
    
    // p.216
    @PostMapping("/register")
@@ -64,23 +53,12 @@ public class BoardController {
       return "redirect:/board/list";
    }
 
-   // p.218
-//   @GetMapping({ "/get", "/modify" })
-//   public void get(@RequestParam("bno") Long bno, Model model) {
-//
-//      log.info("/get or modify ");
-//      model.addAttribute("board", service.get(bno));
-//   }
-   
 	@GetMapping({ "/get", "/modify" })
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
-
 		log.info("/get or modify");
 		model.addAttribute("board", service.get(bno));
 	}
 
-
-   // p.219
    @PostMapping("/modify")
    public String modify(BoardVO board, RedirectAttributes rttr) {
       log.info("modify:" + board);
@@ -94,7 +72,6 @@ public class BoardController {
       return "redirect:/board/list";
    }
 
-   // p.220
    @PostMapping("/remove")
    public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr)
    {
@@ -105,18 +82,4 @@ public class BoardController {
       }
       return "redirect:/board/list";
    }
-} // class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} 

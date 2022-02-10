@@ -15,19 +15,19 @@
 <!--       values (seq_board.nextval, #{title}, #{content}, #{writer}) -->
 <!--    </insert>  -->
    
-<!--    <insert id="insertSelectKey"> -->
-<!--       <selectKey keyProperty="bno" order="BEFORE"   resultType="long"> -->
-<!--          select seq_board.nextval from dual -->
-<!--       </selectKey> -->
-<!--       insert into tbl_board (bno,title,content, writer) -->
-<!--       values (#{bno}, #{title}, #{content}, #{writer}) -->
-<!--    </insert>     -->
+   <insert id="insertSelectKey">
+      <selectKey keyProperty="bno" order="BEFORE"   resultType="long">
+         select seq_board.nextval from dual
+      </selectKey>
+      insert into tbl_board (bno,title,content, writer)
+      values (#{bno}, #{title}, #{content}, #{writer})
+   </insert>    
    
-<!--    <select id="read" resultType="org.zerock.domain.BoardVO"> -->
-<!--       select *  -->
-<!--       from tbl_board  -->
-<!--       where bno =   #{bno} -->
-<!--    </select>    -->
+   <select id="read" resultType="BoardVO">
+      select * 
+      from tbl_board 
+      where bno =   #{bno}
+   </select>   
    
 <!--    <delete id="delete"> -->
 <!--       delete tbl_board  -->
