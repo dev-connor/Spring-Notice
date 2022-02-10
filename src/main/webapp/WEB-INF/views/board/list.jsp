@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="${webappRoot}/resources/css/board.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 
@@ -17,7 +18,7 @@
    <br>
    <br>
 
-   <table class="table table-striped table-bordered table-hover">
+   <table class="table table-striped table-bordered table-hover" border="1">
       <thead>
          <tr>
             <th>#번호</th>
