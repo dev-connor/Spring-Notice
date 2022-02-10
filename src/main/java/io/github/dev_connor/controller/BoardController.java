@@ -40,15 +40,10 @@ public class BoardController {
    @GetMapping("/register")
    public void register() {}
    
-   // p.216
    @PostMapping("/register")
    public String register(BoardVO board, RedirectAttributes rttr) { 
       log.info("register: " + board);
       service.register(board);
-      //
-      // 일회성 전달
-      // bno 가 selectKey 에 의해 먼저 실행되고 board 객체에 설정됨..
-      // ***** 활용 기억  : board.getBno()  *****
       rttr.addFlashAttribute("result", board.getBno());
       return "redirect:/board/list";
    }
@@ -63,9 +58,6 @@ public class BoardController {
    public String modify(BoardVO board, RedirectAttributes rttr) {
       log.info("modify:" + board);
 
-      // ?error
-      // ?success
-      // ?result=success
       if (service.modify(board)) {
          rttr.addFlashAttribute("result", "success");
       }
@@ -75,7 +67,6 @@ public class BoardController {
    @PostMapping("/remove")
    public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr)
    {
-
       log.info("remove..." + bno);
       if (service.remove(bno)) {
          rttr.addFlashAttribute("result", "success");
