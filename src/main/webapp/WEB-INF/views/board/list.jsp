@@ -12,9 +12,11 @@
 <body>
 
    <h1>List Page</h1>
+   <h1></h1>
 
    <br>
-   <a href="/board/register">register</a>
+   <a href="/board/register">글쓰기</a> <br>
+   <a href="/customLogin">로그인</a> <br>
    <br>
    <br>
 

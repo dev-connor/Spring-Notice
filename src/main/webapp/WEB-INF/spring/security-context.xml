@@ -2,19 +2,25 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-		
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 빈 생성 -->
+	<context:component-scan base-package="io.github.dev_connor" />
+
+	<!-- 로그인 권한 -->		
 	<security:http>
 		<security:intercept-url pattern="/sample/all" access="permitAll" />
 		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
 		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" />
 
-		<security:form-login login-page="/customLogin"/>
+		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
 		<security:access-denied-handler error-page="/accessError" />
 	</security:http>
 	
-	<!-- 임시 로그인 -->
+	<!-- 임시계정 -->
 	<security:authentication-manager> 
 		<security:authentication-provider> 
 			<security:user-service> 
