@@ -18,12 +18,16 @@
    </sec:authorize>
 
    <br>
-   <a href="/board/register">글쓰기</a> <br>
+   <button onclick="location.href='/board/register'">글쓰기</button> <br>
    <sec:authorize access="isAnonymous()">
-   		<a href="/customLogin">로그인</a> 
+	   <button onclick="location.href='/customLogin'">로그인</button> <br>
    </sec:authorize>
    <sec:authorize access="isAuthenticated()">
-   		<a href="/customLogout">로그아웃</a> 
+		<form action="/customLogout" method='post'>
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+			<button>로그아웃</button>
+		</form>
    </sec:authorize>
    <br>
    <br>

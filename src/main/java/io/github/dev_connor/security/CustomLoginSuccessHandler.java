@@ -27,19 +27,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		auth.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
-
 		log.warn("ROLE NAMES: " + roleNames);
-
-		if (roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/sample/admin");
-			return;
-		}
-
-		if (roleNames.contains("ROLE_MEMBER")) {
-			response.sendRedirect("/sample/member");
-			return;
-		}
-		response.sendRedirect("/");
+		response.sendRedirect("/board/list");
 	}
 }
 
