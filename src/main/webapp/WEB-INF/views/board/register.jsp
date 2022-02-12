@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
    
 <!DOCTYPE html>
 <html>
@@ -25,11 +26,13 @@
       </div>
 
       <div class="form-group">
-         <label>Writer</label> <input class="form-control" name='writer'>
+         <label>Writer</label> <input class="form-control" name='writer' 
+         	value="<sec:authentication property="principal.username"/>" readonly>
       </div>
-      <button type="submit" class="btn btn-default">Submit Button</button>
-      <button type="reset" class="btn btn-default">Reset Button</button>
+      <button type="submit" class="btn btn-default">글 작성</button>
+      <button type="reset" class="btn btn-default">모두 지우기</button>
    </form>
+   <button type="button" onclick="location.href='/board/list'">이전</button>
 
     
 
