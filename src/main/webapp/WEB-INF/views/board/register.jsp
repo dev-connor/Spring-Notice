@@ -33,7 +33,7 @@
       <button type="submit" class="btn btn-default">글 작성</button>
       <button type="reset" class="btn btn-default">모두 지우기</button>
    </form>
-   <button type="button" onclick="location.href='/board/list'">이전</button>
+   <button type="button" onclick="location.href='/board/list'">목록</button>
 
     
 

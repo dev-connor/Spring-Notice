@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/include/title.jsp" %>
 </head>
@@ -46,14 +47,10 @@
         <label>Text area</label>
         <textarea class="form-control" rows="3" name='content' ><c:out value="${board.content}"/></textarea>
       </div>
-      
-      
-   
-             
-   	 <!-- 검색조건/검색어/페이지번호 -->
-     <button type="submit" data-oper='modify' class="btn btn-default">Modify</button>
-     <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
-     <button type="submit" data-oper='list' class="btn btn-info">List</button>
+
+	<!-- 검색조건/검색어/페이지번호 -->
+	<button type="submit" data-oper='modify' class="btn btn-default">수정완료</button>
+	<button type="submit" data-oper='list' class="btn btn-info">목록</button>
      
    </form>
       <div class="form-group">
@@ -67,37 +64,26 @@
         <input class="form-control" name='updateDate'
           value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.updateDate}" />'  disabled>            
       </div>
-
-
    </div> 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
    $(document).ready(function(){
        var formObj = $("form");
 
         $('button').on("click", function(e){
-          
           e.preventDefault(); 
-          
           var operation = $(this).data("oper");
-          
           console.log(operation);
           
-          if(operation === 'remove'){
-            formObj.attr("action", "/board/remove");
-            
-          }else if(operation === 'list'){
+          if(operation === 'list'){
             //move to list
             formObj.attr("action", "/board/list").attr("method","get");
-            
             var pageNumTag = $("input[name='pageNum']").clone();
             var amountTag = $("input[name='amount']").clone();
             var keywordTag = $("input[name='keyword']").clone();
             var typeTag = $("input[name='type']").clone();      
             
             formObj.empty();
-            
             formObj.append(pageNumTag);
             formObj.append(amountTag);
             formObj.append(keywordTag);
@@ -108,8 +94,5 @@
         });
    });
 </script>
-   
-
-    
 </body>
 </html>
