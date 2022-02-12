@@ -70,7 +70,6 @@
       </c:forEach>
    </table>
    
-   <!-- p 311 -->
 		<form id='actionForm' action="/board/list" method='get'>
 			<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 			<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
@@ -80,8 +79,6 @@
 				value='<c:out value="${ pageMaker.cri.keyword }"/>'>
 		</form>
    
-   
-	   <!-- p 308 -->
 	   <div class='pull-right'>
 	      <ul class="pagination"> 
 	          <c:if test="${pageMaker.prev}">
@@ -98,17 +95,12 @@
 	      </ul>
 	   </div>
 	   <!--  end Pagination -->   
-
    <br>
-
 
 <script>
    $(document).ready(function(){
       var result = '<c:out value="${result}"/>';
-      
       checkModal(result);
-      
-      // p.257
       history.replaceState({}, null, null);
       
       function checkModal(result){
@@ -163,7 +155,6 @@
 					e.preventDefault();
 
 					searchForm.submit();
-
 				});
    });
 </script>

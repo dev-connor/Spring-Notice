@@ -16,7 +16,7 @@
 		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
 		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" />
 
-		<security:form-login login-page="/customLogin"/> 
+		<security:form-login login-page="/customLogin" default-target-url="/board/list"/> 
 		<security:logout logout-url="/customLogout" invalidate-session="true" logout-success-url="/board/list"/>
 		<security:access-denied-handler error-page="/accessError" />
 	</security:http>
