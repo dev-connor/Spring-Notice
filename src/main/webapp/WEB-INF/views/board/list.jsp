@@ -13,24 +13,24 @@
 <body>
 
    <h1>List Page</h1>
+   
    <sec:authorize access="isAuthenticated()">
 	   <h3><sec:authentication property="principal.username"/> 님 환영합니다.</h3>
-   </sec:authorize>
-
-   <br>
+   </sec:authorize><br>
+   
    <button onclick="location.href='/board/register'">글쓰기</button> <br>
+   
    <sec:authorize access="isAnonymous()">
 	   <button onclick="location.href='/customLogin'">로그인</button> <br>
    </sec:authorize>
+   
    <sec:authorize access="isAuthenticated()">
 		<form action="/customLogout" method='post'>
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 			<button>로그아웃</button>
 		</form>
-   </sec:authorize>
-   <br>
-   <br>
+   </sec:authorize><br><br>
 
    <table class="table table-striped table-bordered table-hover" border="1">
       <thead>

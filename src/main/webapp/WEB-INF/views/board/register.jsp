@@ -13,6 +13,8 @@
    <h1>Register Page</h1>
    
    <form role="form" action="/board/register" method="post">
+   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+   
       <div class="form-group">
          <label>Title</label> <input class="form-control" name='title'>
       </div>
