@@ -13,6 +13,7 @@
 
    <h1>Register Page</h1>
    
+   <label>Writer</label> <input value="<sec:authentication property="principal.username"/>" disabled>
    <form role="form" action="/board/register" method="post">
    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
    
@@ -26,8 +27,8 @@
       </div>
 
       <div class="form-group">
-         <label>Writer</label> <input class="form-control" name='writer' 
-         	value="<sec:authentication property="principal.username"/>" readonly>
+      <input class="form-control" name='writer' 
+      	value="<sec:authentication property="principal.username"/>" hidden>
       </div>
       <button type="submit" class="btn btn-default">글 작성</button>
       <button type="reset" class="btn btn-default">모두 지우기</button>

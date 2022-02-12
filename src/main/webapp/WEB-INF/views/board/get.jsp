@@ -16,27 +16,27 @@
 
       <div class="form-group">
          <label>Bno</label> <input class="form-control" name='bno'
-            value='<c:out value="${board.bno }"/>' readonly="readonly">
+            value='<c:out value="${board.bno }"/>' disabled>
       </div>
 
       <div class="form-group">
          <label>Title</label> <input class="form-control" name='title'
-            value='<c:out value="${board.title }"/>' readonly="readonly">
+            value='<c:out value="${board.title }"/>' disabled>
       </div>
 
       <div class="form-group">
          <label>Text area</label>
          <textarea class="form-control" rows="3" name='content'
-            readonly="readonly"><c:out value="${board.content}" /></textarea>
+            disabled><c:out value="${board.content}" /></textarea>
       </div>
 
       <div class="form-group">
          <label>Writer</label> <input class="form-control" name='writer'
-            value='<c:out value="${board.writer }"/>' readonly="readonly">
+            value='<c:out value="${board.writer }"/>' disabled>
       </div>
 
       <button data-oper='modify' class="btn btn-default">
-         <a href="/board/modify?bno=<c:out value="${board.bno}"/>">Modify</a>
+         <a href="/board/modify?bno=<c:out value='${board.bno}'/>">Modify</a>
       </button>
       <button data-oper='list' class="btn btn-info">
          <a href="/board/list">List</a>
