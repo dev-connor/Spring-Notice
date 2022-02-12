@@ -2,6 +2,7 @@ package io.github.dev_connor.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,8 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/board/*")
 @AllArgsConstructor
 public class BoardController {
-   private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-   private  BoardService service;
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private BoardService service;
 
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
@@ -36,16 +37,18 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
-   @GetMapping("/register")
-   public void register() {}
-   
-   @PostMapping("/register")
-   public String register(BoardVO board, RedirectAttributes rttr) { 
-      log.info("register: " + board);
-      service.register(board);
-      rttr.addFlashAttribute("result", board.getBno());
-      return "redirect:/board/list";
-   }
+	@GetMapping("/register")
+	@PreAuthorize("isAuthenticated()")
+	public void register() {}
+
+	@PostMapping("/register")
+	@PreAuthorize("isAuthenticated()")
+	public String register(BoardVO board, RedirectAttributes rttr) {
+		log.info("register: " + board);
+		service.register(board);
+		rttr.addFlashAttribute("result", board.getBno());
+		return "redirect:/board/list";
+	}
 
 	@GetMapping({ "/get", "/modify" })
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
@@ -53,23 +56,22 @@ public class BoardController {
 		model.addAttribute("board", service.get(bno));
 	}
 
-   @PostMapping("/modify")
-   public String modify(BoardVO board, RedirectAttributes rttr) {
-      log.info("modify:" + board);
+	@PostMapping("/modify")
+	public String modify(BoardVO board, RedirectAttributes rttr) {
+		log.info("modify:" + board);
 
-      if (service.modify(board)) {
-         rttr.addFlashAttribute("result", "success");
-      }
-      return "redirect:/board/list";
-   }
+		if (service.modify(board)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/board/list";
+	}
 
-   @PostMapping("/remove")
-   public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr)
-   {
-      log.info("remove..." + bno);
-      if (service.remove(bno)) {
-         rttr.addFlashAttribute("result", "success");
-      }
-      return "redirect:/board/list";
-   }
-} 
+	@PostMapping("/remove")
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+		log.info("remove..." + bno);
+		if (service.remove(bno)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/board/list";
+	}
+}

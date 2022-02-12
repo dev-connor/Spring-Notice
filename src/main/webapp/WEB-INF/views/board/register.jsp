@@ -16,7 +16,7 @@
    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
    
       <div class="form-group">
-         <label>Title</label> <input class="form-control" name='title'>
+         <label>Title</label> <input class="form-control" name='title' autofocus>
       </div>
 
       <div class="form-group">
