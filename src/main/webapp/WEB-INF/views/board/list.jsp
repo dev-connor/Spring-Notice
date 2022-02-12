@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<%@include file="/WEB-INF/views/include/title.jsp" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="${webappRoot}/resources/css/board.css" type="text/css" rel="stylesheet" />
 </head>
@@ -14,9 +14,13 @@
 
    <h1>List Page</h1>
    
+   <sec:authorize access="isAnonymous()">
+	   <h3>로그인을 해주세요.</h3>
+   </sec:authorize>
    <sec:authorize access="isAuthenticated()">
 	   <h3><sec:authentication property="principal.username"/> 님 환영합니다.</h3>
-   </sec:authorize><br>
+   </sec:authorize>
+   <br>
    
    <button onclick="location.href='/board/register'">글쓰기</button> <br>
    

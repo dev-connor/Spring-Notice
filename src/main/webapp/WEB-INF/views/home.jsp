@@ -3,7 +3,7 @@
 <%@ page session="false"%>
 <html>
 <head>
-<title>Home</title>
+<%@include file="/WEB-INF/views/include/title.jsp" %>
 </head>
 <body>
 	<h1>Hello world!</h1>
