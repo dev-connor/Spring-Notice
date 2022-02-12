@@ -7,7 +7,6 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
 @Data
-@Alias("BoardVO")
 public class BoardVO {
 	private long bno;
 	private String title; 
