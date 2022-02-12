@@ -22,6 +22,8 @@
 	    <property name="typeAliases">
 	        <list> 
 	            <value>io.github.dev_connor.domain.BoardVO</value>
+	            <value>io.github.dev_connor.domain.MemberVO</value>
+	            <value>io.github.dev_connor.domain.AuthVO</value>
 	        </list>
 	    </property>		    
 	</bean>
