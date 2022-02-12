@@ -18,6 +18,11 @@
          <label>Bno</label> <input class="form-control" name='bno'
             value='<c:out value="${board.bno }"/>' disabled>
       </div>
+      
+      <div class="form-group">
+         <label>Writer</label> <input class="form-control" name='writer'
+            value='<c:out value="${board.writer }"/>' disabled>
+      </div>      
 
       <div class="form-group">
          <label>Title</label> <input class="form-control" name='title'
@@ -30,10 +35,7 @@
             disabled><c:out value="${board.content}" /></textarea>
       </div>
 
-      <div class="form-group">
-         <label>Writer</label> <input class="form-control" name='writer'
-            value='<c:out value="${board.writer }"/>' disabled>
-      </div>
+
 
       <button data-oper='modify' class="btn btn-default">
          <a href="/board/modify?bno=<c:out value='${board.bno}'/>">Modify</a>

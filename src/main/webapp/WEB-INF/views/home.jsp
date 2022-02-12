@@ -10,7 +10,6 @@
 
 	<P>The time on the server is ${serverTime}.</P>
 	<a href="/board/list">/board/list</a> <br>
-	<a href="/board/list">/board/list?pageNum=1&amount=2</a> <br>
 	
 </body>
 </html>

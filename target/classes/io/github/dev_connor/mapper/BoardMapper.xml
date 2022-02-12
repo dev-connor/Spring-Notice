@@ -44,7 +44,7 @@
 	<!-- 글 수정 -->
    <update id="update">
       update tbl_board
-      set title= #{title}, content=#{content}, writer=#{writer}, updateDate=sysdate
+      set title= #{title}, content=#{content}, updateDate=sysdate
       where bno= #{bno}
    </update>   
    

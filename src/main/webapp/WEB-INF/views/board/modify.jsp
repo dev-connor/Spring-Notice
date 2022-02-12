@@ -14,6 +14,14 @@
    
    <div class="panel-body">
 
+      <div class="form-group">
+        <label>Bno</label> 
+        <input value='<c:out value="${board.bno }"/>' disabled>
+      </div>
+      <div class="form-group">
+        <label>Writer</label> 
+        <input value='<c:out value="${board.writer}"/>' disabled>            
+      </div>
       <form role="form" action="/board/modify" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       
@@ -22,12 +30,11 @@
        <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
       <input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
       
- 
       <div class="form-group">
-        <label>Bno</label> 
         <input class="form-control" name='bno' 
-           value='<c:out value="${board.bno }"/>' readonly="readonly">
+           value='<c:out value="${board.bno }"/>' hidden>
       </div>
+ 
       
       <div class="form-group">
         <label>Title</label> 
@@ -40,23 +47,7 @@
         <textarea class="form-control" rows="3" name='content' ><c:out value="${board.content}"/></textarea>
       </div>
       
-      <div class="form-group">
-        <label>Writer</label> 
-        <input class="form-control" name='writer'
-          value='<c:out value="${board.writer}"/>' readonly="readonly">            
-      </div>
       
-      <div class="form-group">
-        <label>RegDate</label> 
-        <input class="form-control" name='regDate'
-          value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.regdate}" />'  readonly="readonly">            
-      </div>
-      
-      <div class="form-group">
-        <label>Update Date</label> 
-        <input class="form-control" name='updateDate'
-          value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.updateDate}" />'  readonly="readonly">            
-      </div>
    
              
    	 <!-- 검색조건/검색어/페이지번호 -->
@@ -65,6 +56,17 @@
      <button type="submit" data-oper='list' class="btn btn-info">List</button>
      
    </form>
+      <div class="form-group">
+        <label>RegDate</label> 
+        <input class="form-control" name='regDate'
+          value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.regdate}" />'  disabled>            
+      </div>
+      
+      <div class="form-group">
+        <label>Update Date</label> 
+        <input class="form-control" name='updateDate'
+          value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.updateDate}" />'  disabled>            
+      </div>
 
 
    </div> 
