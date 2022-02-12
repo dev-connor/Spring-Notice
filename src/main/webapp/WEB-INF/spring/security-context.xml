@@ -24,7 +24,6 @@
 	<!-- DB 연결 -->
 	<security:authentication-manager> 
 		<security:authentication-provider user-service-ref="customUserDetailsService">
-<!-- 			<security:jdbc-user-service data-source-ref="dataSource"/> -->
 			<security:password-encoder ref="customPasswordEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
