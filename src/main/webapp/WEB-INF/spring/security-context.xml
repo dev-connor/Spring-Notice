@@ -9,6 +9,8 @@
 	
 	<!-- 빈 생성 -->
 	<context:component-scan base-package="io.github.dev_connor" />
+	
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 
 	<!-- 로그인 권한 -->		
 	<security:http>
@@ -24,7 +26,7 @@
 	<!-- DB 연결 -->
 	<security:authentication-manager> 
 		<security:authentication-provider user-service-ref="customUserDetailsService">
-			<security:password-encoder ref="customPasswordEncoder"/>
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>
