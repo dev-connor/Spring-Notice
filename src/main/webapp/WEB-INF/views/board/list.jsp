@@ -26,6 +26,7 @@
    
    <sec:authorize access="isAnonymous()">
 	   <button onclick="location.href='/customLogin'">로그인</button> <br>
+	   <button onclick="location.href='/join'">회원가입</button> <br>
    </sec:authorize>
    
    <sec:authorize access="isAuthenticated()">

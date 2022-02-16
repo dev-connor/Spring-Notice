@@ -9,20 +9,23 @@
 <%@include file="/WEB-INF/views/include/title.jsp" %>
 </head>
 <body>
-	<h1>로그인</h1>
+	<h1>회원가입</h1>
 	<h2><c:out value="${error}" /></h2>
 	<h2><c:out value="${logout}" /></h2>
 
-	<form method='post' action="/login">
+	<form method='post' action="/join">
 		<div>
-			<input type='text' name='username' autofocus>
+			아이디: <input type='text' name='userid' autofocus>
 		</div>
 		<div>
-			<input type='password' name='password'>
+			비밀번호: <input type='password' name='userpw'>
 		</div>
 		<div>
-			<input type='checkbox' name='remember-me'> Remember Me
+			이름: <input type='text' name='userName'>
 		</div>
+<!-- 		<div> -->
+<!-- 			권한: <input type='text' name='authList'> -->
+<!-- 		</div> -->
 
 		<div>
 			<input type='submit'>
