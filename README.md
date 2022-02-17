@@ -14,19 +14,19 @@
 3. 회원가입
     - 비밀번호 암호화 처리
 4. 글 목록
-5. 글 작성
+5. 글 작성 & 로그인
+    - Spring security 의 CSRF
     - 로그인 권한처리
     - 로그인상태에 따른 동적 화면구현
 6. 글 수정 & 글 삭제
     - 권한에 따른 수정/삭제
 7. 페이징처리
 
-### 기능
+### 적용된 다른 기능
 
 
 1. 로그인과 DB 연결
 9. 로그아웃 기능
-10. CSRF 토큰 적용
 
 ---
 
@@ -74,6 +74,70 @@
 
 > 비밀번호가 암호화되어 DB 에 저장됩니다.
 <br>
+
+**WEB-INF/spring/security-context.xml**
+```java
+<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+
+<security:authentication-manager> 
+	<security:authentication-provider user-service-ref="customUserDetailsService">
+		<security:password-encoder ref="bcryptPasswordEncoder"/>
+	</security:authentication-provider>
+</security:authentication-manager>
+```
+
+`BCryptPasswordEncoder` 스프링프레임워크의 패스워드 인코더를 사용합니다.
+
+<br>
+
+**컨트롤러**
+
+```java
+@Controller
+@Log4j
+@AllArgsConstructor
+public class MemberController {
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private MemberService service;
+
+	@GetMapping("/join")
+	public void joinGET() {
+	}
+	
+	@PostMapping("/join")
+	public String joinPost(MemberVO member) {
+		service.join(member);
+		return "redirect:/board/list";
+	}
+}
+```
+<br>
+
+**서비스**
+
+```java
+@Log4j
+@Service
+@AllArgsConstructor
+public class MemberServiceImpl implements MemberService {
+
+	@Setter(onMethod_ = @Autowired)
+	private MemberMapper mapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private PasswordEncoder pwencoder;
+
+	@Override
+	public void join(MemberVO member) {
+		String encodedPW = pwencoder.encode(member.getUserpw());
+		member.setUserpw(encodedPW);
+		mapper.join(member);
+	}
+}
+```
+
+`pwencoder.encode` 비밀번호를 암호화합니다.
+
 
 ### 3. 글 목록
 <img width="750" alt="DB" src="https://user-images.githubusercontent.com/70655507/154282823-82103c36-9517-4951-919b-292de6ca30fa.PNG">
@@ -137,11 +201,57 @@ public class BoardServiceImpl implements BoardService {
 </select>
 ```
 
-### 4. 글 작성
+### 4. 글 작성 & 로그인
 <img width="750" alt="로그인" src="https://user-images.githubusercontent.com/70655507/154280439-58771c56-d740-419e-8f4b-b092d478125c.PNG">
 
 > 로그인이 되어있지 않다면 글쓰기버튼을 클릭 시 로그인페이지로 연결됩니다.
 <br>
+
+#### - 글 작성 시 로그인 페이지로
+
+<br>
+
+**WEB-INF/spring/appServlet/servlet-context.xml**
+
+```xml
+<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
+```
+
+**컨트롤러**
+
+```java
+@GetMapping("/register")
+@PreAuthorize("isAuthenticated()")
+public void register() {}
+
+@PostMapping("/register")
+@PreAuthorize("isAuthenticated()")
+public String register(BoardVO board, RedirectAttributes rttr) {
+	service.register(board);
+	rttr.addFlashAttribute("result", board.getBno());
+	return "redirect:/board/list";
+}
+```
+
+`@PreAuthorize("isAuthenticated()")` 어노테이션으로 로그인한 사용자만 글작성을 하도록 합니다.
+
+<br>
+
+#### - 로그인 CSRF
+
+```jsp
+<form method='post' action="/login">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+	<div><input type='text' name='username' autofocus></div>
+	<div><input type='password' name='password'></div>
+	<div><input type='checkbox' name='remember-me'> Remember Me</div>
+
+	<div><input type='submit'></div>
+</form>
+```
+
+> Spring security 에서는 모든 POST 방식의 form 태그에 CSRF 토큰이 필요합니다.
 
 <img width="750" alt="글작성" src="https://user-images.githubusercontent.com/70655507/154280449-79be4a67-2fb5-4ec0-80cb-1f96240eb7ef.PNG">
 
@@ -149,6 +259,18 @@ public class BoardServiceImpl implements BoardService {
 > 암호화된 비밀번호는 디코드되어 비밀번호가 일치하는지 확인한 후 로그인됩니다. <br>
 > 로그인 후에는 바로 글작성페이지로 이동됩니다.
 <br>
+
+**MyBatis**
+
+```xml
+<insert id="insertSelectKey">
+<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+ select seq_board.nextval from dual
+</selectKey>
+insert into tbl_board (bno,title,content, writer)
+values (#{bno}, #{title}, #{content}, #{writer})
+</insert>    
+```
 
 <img width="750" alt="글작성_완료" src="https://user-images.githubusercontent.com/70655507/154280458-4dfe496c-5013-4cf5-9ec6-3226a4f67bdb.PNG">
 <img width="750" alt="글작성_완료2" src="https://user-images.githubusercontent.com/70655507/154280468-403cfaf6-c44d-47c3-8056-9a5aab89dcc9.PNG">
@@ -167,6 +289,23 @@ public class BoardServiceImpl implements BoardService {
 
 > 자신의 글에는 수정, 삭제버튼이 생긴 것을 볼 수 있습니다.
 <br>
+
+**글상세.jsp**
+
+```jsp
+<sec:authentication property="principal" var="p"/>
+<sec:authorize access="isAuthenticated()">
+	<c:if test="${p.username eq board.writer }">
+		<button data-oper='modify' class="btn btn-default">
+			<a href="/board/modify?bno=<c:out value='${board.bno}'/>">수정</a>
+		</button>			
+		<form role="form" action="/board/remove?bno=${board.bno }" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
+		</form>
+	</c:if>
+</sec:authorize>
+```
 
 <img width="750" alt="글수정" src="https://user-images.githubusercontent.com/70655507/154280701-5d7d7d53-43f9-4fb9-be8b-c312cbbfda1b.PNG">
 <img width="750" alt="글수정_완료" src="https://user-images.githubusercontent.com/70655507/154280706-140540ab-4c89-4a6d-8d0c-d52ff8305dcd.PNG">
