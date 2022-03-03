@@ -2,7 +2,7 @@
 
 주제: 게시판
 
-툴: 스프링 프레임워크
+툴: Spring framework, STS, Oracle, SQL Developer, Git&GitHub
 
 개발인원: 개인
 
