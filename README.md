@@ -212,6 +212,8 @@ public class BoardServiceImpl implements BoardService {
 </select>
 ```
 
+INDEX 로 정렬하는 작업 없이 글목록을 불러옵니다.
+
 ### 4. 글 작성 & 로그인
 <img width="750" alt="로그인" src="https://user-images.githubusercontent.com/70655507/154280439-58771c56-d740-419e-8f4b-b092d478125c.PNG">
 
